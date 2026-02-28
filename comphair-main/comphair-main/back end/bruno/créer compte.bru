@@ -1,0 +1,20 @@
+meta {
+  name: créer compte
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:3000/auth/signup
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "prenom": "Nana",
+    "email": "test@test.com",
+    "mdp": "azerty",
+    "confirmMdp": "azerty"
+  }
+}

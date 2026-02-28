@@ -1,0 +1,54 @@
+services:
+  api:
+    container_name: comphair_api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    volumes:
+      - ./api:/app
+      - api_node_modules:/app/node_modules
+    command: ["bun", "run", "dev"]
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - ./api/.env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - comphair
+
+  db:
+    restart: unless-stopped
+    image: mariadb
+    container_name: comphair_db
+    env_file:
+      - ./db/.env
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - comphair
+
+  adminer:
+    container_name: comphair_adminer
+    restart: unless-stopped
+    image: adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - comphair
+
+volumes:
+  api_node_modules:
+  db_data:
+
+networks:
+  comphair:
+    driver: bridge

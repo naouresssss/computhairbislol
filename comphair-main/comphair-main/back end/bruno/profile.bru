@@ -1,0 +1,25 @@
+meta {
+  name: profile
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:3000/profile
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc3MjIyMjc2NSwiZXhwIjoxNzcyODI3NTY1fQ.LR2VTCQkI66djTbf5QGS2QgVYEG17xHdBr8wH6rKTj4
+}
+
+body:json {
+  {
+    "type": "boucle",
+    "etatGeneral": "sec",
+    "cuirChevelu": "gras",
+    "traitementChimique": "coloration",
+    "objectifs": ["hydratation"]
+  }
+}
